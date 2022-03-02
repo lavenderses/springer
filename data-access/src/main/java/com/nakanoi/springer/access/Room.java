@@ -8,6 +8,13 @@ public class Room {
 
   public Room() {}
 
+  /**
+   * Room constructor with constructor args.
+   *
+   * @param roomId Room ID string which is unique.
+   * @param roomName Room name string.
+   * @param capacity Room capacity.
+   */
   public Room(String roomId, String roomName, int capacity) {
     this.roomId = roomId;
     this.roomName = roomName;
@@ -40,6 +47,7 @@ public class Room {
 
   @Override
   public String toString() {
-    return String.format("Room{roomId='%s', roomName='%s', capacity=%d}", roomId, roomName, capacity);
+    return String.format(
+        "Room{roomId='%s', roomName='%s', capacity=%d}", roomId, roomName, capacity);
   }
 }

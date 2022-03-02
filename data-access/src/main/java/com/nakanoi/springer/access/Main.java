@@ -1,9 +1,8 @@
 package com.nakanoi.springer.access;
 
+import java.util.List;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-
-import java.util.List;
 
 /** Simple main class. */
 public class Main {
