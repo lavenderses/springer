@@ -1,3 +1,4 @@
+/*
 package com.nakanoi.springer.access;
 
 import javax.naming.NamingException;
@@ -6,13 +7,14 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jndi.JndiTemplate;
 
-/** JNDI data source. */
+/** JNDI data source. * /
 @Configuration
-public class JndiDataSource {
+public class JndiDataSourceConfig {
 
-  @Bean(value = "jndiDataSource")
+  @Bean(name = "jndiDataSource")
   public DataSource dataSource() throws NamingException {
     JndiTemplate jndiTemplate = new JndiTemplate();
     return jndiTemplate.lookup("java:comp/env/jdbc/springer", DataSource.class);
   }
 }
+*/

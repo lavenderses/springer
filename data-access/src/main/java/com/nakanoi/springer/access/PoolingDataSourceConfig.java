@@ -5,6 +5,7 @@ import org.apache.commons.dbcp2.BasicDataSource;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 import org.springframework.context.annotation.PropertySource;
 
 /** Data source config. */
@@ -25,7 +26,8 @@ public class PoolingDataSourceConfig {
    * @param maxWaitMills Database max waiting time.
    * @return Datasource.
    */
-  @Bean(value = "poolingDataSource", destroyMethod = "close")
+  @Bean(name = "poolingDataSource", destroyMethod = "close")
+  @Primary
   public DataSource dataSource(
       @Value("${database.driverClassName}") String driverClassName,
       @Value("${database.url}") String url,
