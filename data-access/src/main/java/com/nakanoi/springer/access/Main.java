@@ -38,5 +38,9 @@ public class Main {
     dao.getAllRoomsWithEquipment();
     dao.getRoomByIdWithEquipment(roomId);
     dao.reportRooms();
+
+    // THROWS EXCEPTION
+    // updateRoom.setRoomId("NOT EXISTING ROOM ID");
+    // dao.updateRoomById(updateRoom);
   }
 }

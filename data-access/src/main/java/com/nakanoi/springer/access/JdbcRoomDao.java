@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import org.springframework.dao.DataRetrievalFailureException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -220,8 +222,13 @@ public class JdbcRoomDao {
     return jdbcTemplate.update(sql, room.getRoomId(), room.getRoomName(), room.getCapacity());
   }
 
-  public int updateRoomById(Room room) {
+  public int updateRoomById(Room room) throws NotFoundRoomIdException {
     String sql = "UPDATE rooms SET room_name=?, capacity=? WHERE room_id=?";
+    try {
+      getRoomById(room.getRoomId());
+    } catch (DataRetrievalFailureException e) {
+      throw new NotFoundRoomIdException("Room ID = " + room.getRoomId() + " not found.");
+    }
     return jdbcTemplate.update(sql, room.getRoomName(), room.getCapacity(), room.getRoomId());
   }
 
