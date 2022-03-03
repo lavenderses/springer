@@ -2,7 +2,6 @@ package com.nakanoi.springer.transaction;
 
 import com.nakanoi.springer.access.JdbcRoomDao;
 import com.nakanoi.springer.access.Room;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.TransactionCallbackWithoutResult;
@@ -26,12 +25,13 @@ public class RoomServiceTemplateImpl implements RoomService {
 
   @Override
   public void insertRoom(Room room) {
-    transactionTemplate.execute(new TransactionCallbackWithoutResult() {
-      @Override
-      protected void doInTransactionWithoutResult(TransactionStatus status) {
-        roomDao.insertRoom(room);
-        room.getEquipmentList().forEach(roomDao::insertEquipment);
-      }
-    });
+    transactionTemplate.execute(
+        new TransactionCallbackWithoutResult() {
+          @Override
+          protected void doInTransactionWithoutResult(TransactionStatus status) {
+            roomDao.insertRoom(room);
+            room.getEquipmentList().forEach(roomDao::insertEquipment);
+          }
+        });
   }
 }

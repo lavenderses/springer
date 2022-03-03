@@ -1,9 +1,7 @@
 package com.nakanoi.springer.transaction;
 
-import com.nakanoi.springer.access.Equipment;
 import com.nakanoi.springer.access.JdbcRoomDao;
 import com.nakanoi.springer.access.Room;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.PlatformTransactionManager;
@@ -11,15 +9,13 @@ import org.springframework.transaction.TransactionDefinition;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.DefaultTransactionDefinition;
 
-import java.util.List;
-
 /** Room service implementation with clear tx. */
 @Service("roomServiceWithClearTx")
 public class RoomServiceTxImpl implements RoomService {
   private final PlatformTransactionManager txManager;
   private final JdbcRoomDao roomDao;
 
-  RoomServiceTxImpl (PlatformTransactionManager txManager, JdbcRoomDao roomDao) {
+  RoomServiceTxImpl(PlatformTransactionManager txManager, JdbcRoomDao roomDao) {
     this.txManager = txManager;
     this.roomDao = roomDao;
   }
@@ -37,7 +33,7 @@ public class RoomServiceTxImpl implements RoomService {
     def.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRED);
     TransactionStatus status = txManager.getTransaction(def);
 
-    try{
+    try {
       roomDao.insertRoom(room);
       room.getEquipmentList().forEach(roomDao::insertEquipment);
     } catch (Exception e) {
