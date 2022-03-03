@@ -236,4 +236,21 @@ public class JdbcRoomDao {
     RoomRowCallbackHandler handler = new RoomRowCallbackHandler();
     jdbcTemplate.query(sql, handler);
   }
+
+  /**
+   * Insert equipment record.
+   *
+   * @param e Equipment to be inserted.
+   */
+  public void insertEquipment(Equipment e) {
+    String sql =
+        "INSERT INTO equipments (equipment_id, equipment_name, equipment_count, equipment_remarks) "
+            + "VALUES (?, ?, ?, ?)";
+    jdbcTemplate.update(
+        sql,
+        e.getEquipmentId(),
+        e.getEquipmentName(),
+        e.getEquipmentCount(),
+        e.getEquipmentRemarks());
+  }
 }

@@ -1,7 +1,6 @@
 package com.nakanoi.springer.access;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 /** Simple room object. */
@@ -53,8 +52,15 @@ public class Room {
     this.capacity = capacity;
   }
 
+  /**
+   * Get deep copy of equipmentList.
+   *
+   * @return Deep copy of equipmentList.
+   */
   public List<Equipment> getEquipmentList() {
-    return Collections.unmodifiableList(equipmentList);
+    List<Equipment> array = new ArrayList<>();
+    equipmentList.forEach(equipment -> array.add(equipment.clone()));
+    return array;
   }
 
   public void addEquipmentList(Equipment equipment) {

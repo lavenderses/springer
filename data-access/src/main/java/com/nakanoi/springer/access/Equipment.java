@@ -1,7 +1,7 @@
 package com.nakanoi.springer.access;
 
 /** Simple equipment class. */
-public class Equipment {
+public class Equipment implements Cloneable {
   private String equipmentId;
   private String equipmentName;
   private int equipmentCount;
@@ -47,5 +47,19 @@ public class Equipment {
         "Equipment{equipmentId='%s', equipmentName='%s',"
             + "equipmentCount='%d', equipmentRemarks='%s'}",
         equipmentId, equipmentName, equipmentCount, equipmentRemarks);
+  }
+
+  @Override
+  public Equipment clone() {
+    try {
+      Equipment clone = (Equipment) super.clone();
+      clone.setEquipmentId(this.getEquipmentId());
+      clone.setEquipmentName(this.getEquipmentName());
+      clone.setEquipmentCount(this.getEquipmentCount());
+      clone.setEquipmentRemarks(this.getEquipmentRemarks());
+      return clone;
+    } catch (CloneNotSupportedException e) {
+      throw new AssertionError();
+    }
   }
 }

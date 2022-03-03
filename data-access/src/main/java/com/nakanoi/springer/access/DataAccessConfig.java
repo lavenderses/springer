@@ -10,7 +10,7 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 
 /** Simple data access config. */
 @Configuration
-@Import(PoolingDataSourceConfig.class)
+@Import(DataSourceConfig.class)
 @ComponentScan("com.nakanoi.springer.access")
 public class DataAccessConfig {
 

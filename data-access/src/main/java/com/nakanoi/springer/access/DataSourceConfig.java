@@ -11,7 +11,7 @@ import org.springframework.context.annotation.PropertySource;
 /** Data source config. */
 @Configuration
 @PropertySource("classpath:jdbc.properties")
-public class PoolingDataSourceConfig {
+public class DataSourceConfig {
 
   /**
    * Simple datasource creation.
@@ -48,4 +48,12 @@ public class PoolingDataSourceConfig {
     dataSource.setMaxWaitMillis(maxWaitMills);
     return dataSource;
   }
+
+  /*
+  @Bean(name = "jndiDataSource")
+  public DataSource dataSource() throws NamingException {
+    JndiTemplate jndiTemplate = new JndiTemplate();
+    return jndiTemplate.lookup("java:comp/env/jdbc/springer", DataSource.class);
+  }
+   */
 }
