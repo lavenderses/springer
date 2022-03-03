@@ -1,12 +1,19 @@
 package com.nakanoi.springer.access;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 /** Simple room object. */
 public class Room {
   private String roomId;
   private String roomName;
   private int capacity;
+  private List<Equipment> equipmentList;
 
-  public Room() {}
+  public Room() {
+    equipmentList = new ArrayList<>();
+  }
 
   /**
    * Room constructor with constructor args.
@@ -19,6 +26,7 @@ public class Room {
     this.roomId = roomId;
     this.roomName = roomName;
     this.capacity = capacity;
+    equipmentList = new ArrayList<>();
   }
 
   public String getRoomId() {
@@ -45,9 +53,18 @@ public class Room {
     this.capacity = capacity;
   }
 
+  public List<Equipment> getEquipmentList() {
+    return Collections.unmodifiableList(equipmentList);
+  }
+
+  public void addEquipmentList(Equipment equipment) {
+    this.equipmentList.add(equipment);
+  }
+
   @Override
   public String toString() {
     return String.format(
-        "Room{roomId='%s', roomName='%s', capacity=%d}", roomId, roomName, capacity);
+        "Room {roomId='%s', roomName='%s', capacity=%d, equipments=%s}",
+        roomId, roomName, capacity, equipmentList);
   }
 }

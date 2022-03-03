@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -127,6 +129,92 @@ public class JdbcRoomDao {
     return rooms;
   }
 
+  /**
+   * Get room by room ID with RoomRowMapper.
+   *
+   * @param roomId Room ID string.
+   * @return Room object.
+   */
+  public Room getRoomByIdWithMapper(String roomId) {
+    String sql = "SELECT room_id, room_name, capacity FROM rooms WHERE room_id = ?";
+    RoomRowMapper mapper = new RoomRowMapper();
+    return jdbcTemplate.queryForObject(sql, mapper, roomId);
+  }
+
+  /**
+   * Get all rooms with RoomRowMapper.
+   *
+   * @return List of room objects.
+   */
+  public List<Room> getAllRoomsWithMapper() {
+    String sql = "SELECT room_id, room_name, capacity FROM rooms";
+    RoomRowMapper mapper = new RoomRowMapper();
+    return jdbcTemplate.query(sql, mapper);
+  }
+
+  /**
+   * Get all rooms with lambda mapper.
+   *
+   * @return List of room objects.
+   */
+  public List<Room> getAllRoomsWithLambda() {
+    String sql = "SELECT room_id, room_name, capacity FROM rooms";
+    return jdbcTemplate.query(
+        sql,
+        (rs, roomNum) -> {
+          Room room = new Room();
+          room.setRoomId(rs.getString("room_id"));
+          room.setRoomName(rs.getString("room_name"));
+          room.setCapacity(rs.getInt("capacity"));
+          return room;
+        });
+  }
+
+  /**
+   * Get room by room ID with BeanPropertyMapper.
+   *
+   * @param roomId Room ID string.
+   * @return Room object.
+   */
+  public Room getRoomByIdWithBean(String roomId) {
+    String sql = "SELECT room_id, room_name, capacity FROM rooms WHERE room_id = ?";
+    RowMapper<Room> mapper = new BeanPropertyRowMapper<>(Room.class);
+    return jdbcTemplate.queryForObject(sql, mapper, roomId);
+  }
+
+  /**
+   * Get all rooms with their equipments.
+   *
+   * @return List of room objects with their equipments.
+   */
+  public List<Room> getAllRoomsWithEquipment() {
+    String sql =
+        "SELECT r.room_id, r.room_name, r.capacity, e.equipment_id, e.equipment_name, "
+            + "e.equipment_count, e.equipment_remarks "
+            + "FROM rooms r LEFT JOIN equipments e ON r.room_id = e.room_id";
+    RoomResultSetExtractor extractor = new RoomResultSetExtractor();
+    return jdbcTemplate.query(sql, extractor);
+  }
+
+  /**
+   * Get room with its equipments by room ID.
+   *
+   * @param roomId Room ID string.
+   * @return Room with its equipments.
+   */
+  public Room getRoomByIdWithEquipment(String roomId) {
+    String sql =
+        "SELECT r.room_id, r.room_name, r.capacity, e.equipment_id, e.equipment_name, "
+            + "e.equipment_count, e.equipment_remarks "
+            + "FROM rooms r LEFT JOIN equipments e ON r.room_id = e.room_id WHERE r.room_id = ?";
+    RoomResultSetExtractor extractor = new RoomResultSetExtractor();
+    List<Room> rooms = jdbcTemplate.query(sql, extractor, roomId);
+    if (rooms == null) {
+      return null;
+    }
+    return rooms.get(0);
+  }
+
   public int insertRoom(Room room) {
     String sql = "INSERT INTO rooms (room_id, room_name, capacity) VALUES (?, ?, ?)";
     return jdbcTemplate.update(sql, room.getRoomId(), room.getRoomName(), room.getCapacity());
@@ -140,5 +228,12 @@ public class JdbcRoomDao {
   public int deleteRoomById(Room room) {
     String sql = "DELETE FROM rooms WHERE room_id=?";
     return jdbcTemplate.update(sql, room.getRoomId());
+  }
+
+  /** Report all rooms to csv. */
+  public void reportRooms() {
+    String sql = "SELECT room_id, room_name, capacity FROM rooms";
+    RoomRowCallbackHandler handler = new RoomRowCallbackHandler();
+    jdbcTemplate.query(sql, handler);
   }
 }
