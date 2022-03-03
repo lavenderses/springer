@@ -1,4 +1,20 @@
+plugins {
+    id 'war'
+    id 'org.gretty' version '3.0.7'
+}
+
+war {
+    dependsOn jar
+}
+
 dependencies {
+    implementation 'org.springframework:spring-webmvc:5.3.16'
+    implementation 'org.hibernate.validator:hibernate-validator:7.0.2.Final'
+    implementation 'org.slf4j:jcl-over-slf4j:2.0.0-alpha6'
+    implementation 'javax.servlet:javax.servlet-api:4.0.1'
+    implementation 'org.apache.tomee:taglibs-shade:8.0.10'
+
+    testImplementation 'ch.qos.logback:logback-classic:1.3.0-alpha14'
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.2'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.2'
 }
