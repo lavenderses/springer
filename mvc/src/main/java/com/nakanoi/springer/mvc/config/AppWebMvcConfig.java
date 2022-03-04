@@ -9,7 +9,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 /** DispatcherServlet config. */
 @Configuration
 @EnableWebMvc
-@ComponentScan("com.nakanoi.springer.mvc")
+@ComponentScan("com.nakanoi.springer.mvc.app")
 public class AppWebMvcConfig implements WebMvcConfigurer {
 
   @Override
