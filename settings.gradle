@@ -1,3 +1,4 @@
 rootProject.name = 'springer'
 include 'data-access'
+include 'mvc'
 
