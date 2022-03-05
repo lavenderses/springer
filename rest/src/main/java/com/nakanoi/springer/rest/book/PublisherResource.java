@@ -1,11 +1,12 @@
 package com.nakanoi.springer.rest.book;
 
 import java.io.Serializable;
+import javax.validation.constraints.NotNull;
 
 /** Simple book publisher bean. */
 public class PublisherResource implements Serializable, Cloneable {
-  private String name;
-  private String tel;
+  @NotNull private String name;
+  @NotNull private String tel;
 
   public PublisherResource() {}
 

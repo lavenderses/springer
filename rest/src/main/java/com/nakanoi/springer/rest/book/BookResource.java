@@ -5,18 +5,20 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import javax.validation.constraints.NotNull;
 
 /** Book resource for rest. */
 public class BookResource implements Serializable {
   private static final long serialVersionUID = 1L;
   private String bookId;
-  private String name;
-  private List<String> authors;
+  @NotNull private String name;
+  @NotNull private List<String> authors;
 
+  @NotNull
   @JsonFormat(pattern = "yyyy-MM-dd")
   private LocalDate publishedDate;
 
-  private PublisherResource publisher;
+  @NotNull private PublisherResource publisher;
 
   public String getBookId() {
     return bookId;
