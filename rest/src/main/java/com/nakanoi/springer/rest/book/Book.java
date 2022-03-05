@@ -25,10 +25,19 @@ public class Book {
   }
 
   public LocalDate getPublishedDate() {
-    return LocalDate.of(publishedDate.getYear(), publishedDate.getMonth(), publishedDate.getDayOfMonth());
+    if (publishedDate == null) {
+      return null;
+    }
+    return LocalDate.of(
+        publishedDate.getYear(), publishedDate.getMonth(), publishedDate.getDayOfMonth());
   }
 
   public void setPublishedDate(LocalDate publishedDate) {
-    this.publishedDate = LocalDate.of(publishedDate.getYear(), publishedDate.getMonth(), publishedDate.getDayOfMonth());
+    if (publishedDate == null) {
+      return;
+    }
+    this.publishedDate =
+        LocalDate.of(
+            publishedDate.getYear(), publishedDate.getMonth(), publishedDate.getDayOfMonth());
   }
 }

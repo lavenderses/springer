@@ -1,16 +1,16 @@
 package com.nakanoi.springer.rest.book;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import java.io.Serializable;
 import java.time.LocalDate;
+import org.springframework.format.annotation.DateTimeFormat;
 
-/** Book resource for rest. */
-public class BookResource implements Serializable {
+/** Query object for book search. */
+public class BookResourceQuery implements Serializable {
   private static final long serialVersionUID = 1L;
   private String bookId;
   private String name;
 
-  @JsonFormat(pattern = "yyyy-MM-dd")
+  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
   private LocalDate publishedDate;
 
   public String getBookId() {
