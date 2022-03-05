@@ -42,7 +42,11 @@ public class BookController {
               BookResource resource = new BookResource();
               resource.setBookId(book.getBookId());
               resource.setName(book.getName());
+              resource.setAuthors(book.getAuthors());
               resource.setPublishedDate(book.getPublishedDate());
+              resource.setPublisher(
+                  new PublisherResource(
+                      book.getPublisher().getName(), book.getPublisher().getTel()));
               return resource;
             })
         .collect(Collectors.toList());
@@ -59,7 +63,10 @@ public class BookController {
     BookResource resource = new BookResource();
     resource.setBookId(book.getBookId());
     resource.setName(book.getName());
+    resource.setAuthors(book.getAuthors());
     resource.setPublishedDate(book.getPublishedDate());
+    resource.setPublisher(
+        new PublisherResource(book.getPublisher().getName(), book.getPublisher().getTel()));
 
     return resource;
   }
@@ -69,7 +76,10 @@ public class BookController {
       @Validated @RequestBody BookResource bookResource, UriComponentsBuilder uriBuilder) {
     Book newBook = new Book();
     newBook.setName(bookResource.getName());
+    newBook.setAuthors(bookResource.getAuthors());
     newBook.setPublishedDate(bookResource.getPublishedDate());
+    newBook.setPublisher(
+        new Publisher(bookResource.getPublisher().getName(), bookResource.getPublisher().getTel()));
 
     Book createBook = bookService.create(newBook);
     // URI resourceUri =
@@ -91,7 +101,10 @@ public class BookController {
     Book book = new Book();
     book.setBookId(bookId);
     book.setName(bookResource.getName());
+    book.setAuthors(bookResource.getAuthors());
     book.setPublishedDate(bookResource.getPublishedDate());
+    book.setPublisher(
+        new Publisher(bookResource.getPublisher().getName(), bookResource.getPublisher().getTel()));
 
     bookService.update(book);
   }

@@ -18,7 +18,9 @@ public class BookService {
     Book book = new Book();
     book.setBookId("0000-0000-0000-0000");
     book.setName("Title");
+    book.setAuthors(List.of("Alice", "Bob"));
     book.setPublishedDate(LocalDate.now());
+    book.setPublisher(new Publisher("Pub corp", "012-3456-7890"));
     bookRepository.put(book.getBookId(), book);
   }
 

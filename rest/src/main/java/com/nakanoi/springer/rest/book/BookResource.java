@@ -3,15 +3,20 @@ package com.nakanoi.springer.rest.book;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 /** Book resource for rest. */
 public class BookResource implements Serializable {
   private static final long serialVersionUID = 1L;
   private String bookId;
   private String name;
+  private List<String> authors;
 
   @JsonFormat(pattern = "yyyy-MM-dd")
   private LocalDate publishedDate;
+
+  private PublisherResource publisher;
 
   public String getBookId() {
     return bookId;
@@ -29,6 +34,14 @@ public class BookResource implements Serializable {
     this.name = name;
   }
 
+  public List<String> getAuthors() {
+    return new ArrayList<>(authors);
+  }
+
+  public void setAuthors(List<String> authors) {
+    this.authors = new ArrayList<>(authors);
+  }
+
   public LocalDate getPublishedDate() {
     if (publishedDate == null) {
       return null;
@@ -44,5 +57,13 @@ public class BookResource implements Serializable {
     this.publishedDate =
         LocalDate.of(
             publishedDate.getYear(), publishedDate.getMonth(), publishedDate.getDayOfMonth());
+  }
+
+  public PublisherResource getPublisher() {
+    return publisher.clone();
+  }
+
+  public void setPublisher(PublisherResource publisher) {
+    this.publisher = publisher.clone();
   }
 }
