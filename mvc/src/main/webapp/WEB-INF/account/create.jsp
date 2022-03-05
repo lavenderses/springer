@@ -26,8 +26,8 @@
       <form:checkbox path="roles" value="supervisor" /> Supervisor
       <form:checkbox path="roles" value="admin" /> Admin
       <p>Members Type</p>
-      <form:radiobutton path="card.type" value="1" />Free
-      <form:radiobutton path="card.type" value="2" />Payment
+      <form:radiobutton path="card.type" label="Free" value="1" />
+      <form:radiobutton path="card.type" label="Payment" value="2" />
       <form:errors path="card.type" />
       <p>Card number</p>
       <form:input path="card.cardNumber" />

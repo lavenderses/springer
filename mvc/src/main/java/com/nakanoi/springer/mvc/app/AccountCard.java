@@ -5,6 +5,7 @@ import java.io.Serializable;
 import java.util.Date;
 import javax.validation.constraints.Future;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Null;
 import javax.validation.constraints.Size;
 import javax.validation.groups.Default;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -25,29 +26,14 @@ public class AccountCard implements Serializable {
     @Size(max = 0, groups = FreeAccount.class),
     @Size(min = 16, max = 16, groups = PaymentAccount.class)
   })
-  @AlphabetNumber.List({@AlphabetNumber(groups = PaymentAccount.class)})
+  @AlphabetNumber(groups = PaymentAccount.class)
   private String cardNumber;
 
-  @NotNull.List({@NotNull(groups = PaymentAccount.class)})
-  @Future.List({@Future(groups = PaymentAccount.class)})
+  @Null(groups = FreeAccount.class)
+  @NotNull(groups = PaymentAccount.class)
+  @Future(groups = PaymentAccount.class)
   @DateTimeFormat(pattern = "yyyyMMdd")
   private Date validMonth;
-
-  /**
-   * Copy account card object.
-   *
-   * @param card Account card object to copy.
-   * @return Account card deep copy.
-   */
-  public static AccountCard copyOf(AccountCard card) {
-    if (card == null) {
-      return null;
-    }
-    AccountCard clone = new AccountCard();
-    clone.setCardNumber(card.getCardNumber());
-    clone.setValidMonth(card.getValidMonth());
-    return clone;
-  }
 
   public String getType() {
     return type;

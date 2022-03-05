@@ -92,10 +92,10 @@ public class AccountCreateForm implements Serializable {
   }
 
   public AccountCard getCard() {
-    return AccountCard.copyOf(card);
+    return card;
   }
 
   public void setCard(AccountCard card) {
-    this.card = AccountCard.copyOf(card);
+    this.card = card;
   }
 }
