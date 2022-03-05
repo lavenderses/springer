@@ -1,5 +1,7 @@
 package com.nakanoi.springer.rest.book;
 
+import static org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder.on;
+
 import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -16,6 +18,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
+import org.springframework.web.util.UriComponentsBuilder;
 
 /** Simple book rest controller. */
 @RestController
@@ -61,14 +65,23 @@ public class BookController {
   }
 
   @PostMapping
-  public ResponseEntity<Void> createBook(@Validated @RequestBody BookResource bookResource) {
+  public ResponseEntity<Void> createBook(
+      @Validated @RequestBody BookResource bookResource, UriComponentsBuilder uriBuilder) {
     Book newBook = new Book();
     newBook.setName(bookResource.getName());
     newBook.setPublishedDate(bookResource.getPublishedDate());
 
     Book createBook = bookService.create(newBook);
-    String resourceUri = "http://localhost:8080/rest/books/" + createBook.getBookId();
-    return ResponseEntity.created(URI.create(resourceUri)).build();
+    // URI resourceUri =
+    //
+    // uriBuilder.path("/books/{bookId}").buildAndExpand(createBook.getBookId()).encode().toUri();
+    URI resourceUri =
+        MvcUriComponentsBuilder.relativeTo(uriBuilder)
+            .withMethodCall(on(BookController.class).getBook(createBook.getBookId()))
+            .build()
+            .encode()
+            .toUri();
+    return ResponseEntity.created(resourceUri).build();
   }
 
   @PutMapping("/{bookId}")
