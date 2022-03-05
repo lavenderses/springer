@@ -7,5 +7,5 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 /** Configuration for rest dispatcher servlet. */
 @Configuration
 @EnableWebMvc
-@ComponentScan("com.nakanoi.springer.rest.controllers")
+@ComponentScan("com.nakanoi.springer.rest")
 public class RestConfig {}
