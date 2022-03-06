@@ -1,7 +1,10 @@
 package com.nakanoi.springer.rest.book;
 
+import java.io.Serializable;
+
 /** Simple publisher class. */
-public class Publisher implements Cloneable {
+public class Publisher implements Cloneable, Serializable {
+  private static final long serialVersionUID = 1L;
   private String name;
   private String tel;
 
