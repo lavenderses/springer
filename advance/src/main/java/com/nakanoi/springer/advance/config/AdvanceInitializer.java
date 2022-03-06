@@ -24,6 +24,7 @@ public class AdvanceInitializer implements WebApplicationInitializer {
 
     ServletRegistration.Dynamic dispatcher =
         servletContext.addServlet("advance", new DispatcherServlet(dispatcherContext));
+    dispatcher.setAsyncSupported(true);
     dispatcher.setMultipartConfig(new MultipartConfigElement("/tmp"));
     dispatcher.setLoadOnStartup(1);
     dispatcher.addMapping("/");
