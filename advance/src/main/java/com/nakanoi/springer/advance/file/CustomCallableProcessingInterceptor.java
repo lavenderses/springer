@@ -1,9 +1,8 @@
 package com.nakanoi.springer.advance.file;
 
+import java.util.concurrent.Callable;
 import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.context.request.async.CallableProcessingInterceptor;
-
-import java.util.concurrent.Callable;
 
 public class CustomCallableProcessingInterceptor implements CallableProcessingInterceptor {
   @Override

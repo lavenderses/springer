@@ -1,9 +1,12 @@
 package com.nakanoi.springer.advance.config;
 
-import com.nakanoi.springer.advance.file.CustomCallableProcessingInterceptor;
+import com.nakanoi.springer.advance.commons.CommonRequestDataMethodArgumentResolver;
 import com.nakanoi.springer.advance.commons.SuccessLoggingInterceptor;
+import com.nakanoi.springer.advance.file.CustomCallableProcessingInterceptor;
+import java.util.List;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.AsyncSupportConfigurer;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
@@ -32,5 +35,10 @@ public class AdvanceConfig implements WebMvcConfigurer {
         .addInterceptor(new SuccessLoggingInterceptor())
         .addPathPatterns("/**")
         .excludePathPatterns("/resources/**");
+  }
+
+  @Override
+  public void addArgumentResolvers(List<HandlerMethodArgumentResolver> resolvers) {
+    resolvers.add(new CommonRequestDataMethodArgumentResolver());
   }
 }

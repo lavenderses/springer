@@ -1,5 +1,6 @@
 package com.nakanoi.springer.advance.file;
 
+import com.nakanoi.springer.advance.commons.CommonRequestData;
 import java.io.IOException;
 import java.util.concurrent.CompletableFuture;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,8 +19,10 @@ public class FileUploadController {
   @Autowired FileMessager fileMessager;
 
   @GetMapping
-  public String getFileUpload(Model model) {
+  public String getFileUpload(Model model, CommonRequestData requestData) {
     model.addAttribute(new FileUploadForm());
+    model.addAttribute("userAgent", requestData.getUserAgent());
+    model.addAttribute("sessionId", requestData.getSessionId());
     return "files/upload";
   }
 
