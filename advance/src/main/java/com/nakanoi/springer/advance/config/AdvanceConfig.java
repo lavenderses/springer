@@ -14,6 +14,7 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewResolverRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 import org.springframework.web.servlet.resource.VersionResourceResolver;
 
 /** Simple mvc configure. */
@@ -38,6 +39,10 @@ public class AdvanceConfig implements WebMvcConfigurer {
         .addInterceptor(new SuccessLoggingInterceptor())
         .addPathPatterns("/**")
         .excludePathPatterns("/resources/**");
+    registry
+        .addInterceptor(new LocaleChangeInterceptor())
+        .excludePathPatterns("/resources/**")
+        .excludePathPatterns("/**/*.html");
   }
 
   @Override
