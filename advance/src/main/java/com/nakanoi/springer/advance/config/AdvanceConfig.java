@@ -1,10 +1,12 @@
 package com.nakanoi.springer.advance.config;
 
 import com.nakanoi.springer.advance.file.CustomCallableProcessingInterceptor;
+import com.nakanoi.springer.advance.commons.SuccessLoggingInterceptor;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.AsyncSupportConfigurer;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ViewResolverRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -22,5 +24,13 @@ public class AdvanceConfig implements WebMvcConfigurer {
   public void configureAsyncSupport(AsyncSupportConfigurer configurer) {
     configurer.setDefaultTimeout(5000);
     configurer.registerCallableInterceptors(new CustomCallableProcessingInterceptor());
+  }
+
+  @Override
+  public void addInterceptors(InterceptorRegistry registry) {
+    registry
+        .addInterceptor(new SuccessLoggingInterceptor())
+        .addPathPatterns("/**")
+        .excludePathPatterns("/resources/**");
   }
 }
