@@ -1,5 +1,6 @@
 package com.nakanoi.springer.advance.config;
 
+import javax.servlet.MultipartConfigElement;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRegistration;
@@ -23,6 +24,7 @@ public class AdvanceInitializer implements WebApplicationInitializer {
 
     ServletRegistration.Dynamic dispatcher =
         servletContext.addServlet("advance", new DispatcherServlet(dispatcherContext));
+    dispatcher.setMultipartConfig(new MultipartConfigElement("/tmp"));
     dispatcher.setLoadOnStartup(1);
     dispatcher.addMapping("/");
   }
