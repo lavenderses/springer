@@ -5,6 +5,7 @@ import javax.servlet.Filter;
 import javax.servlet.MultipartConfigElement;
 import javax.servlet.ServletRegistration;
 import org.springframework.web.filter.CharacterEncodingFilter;
+import org.springframework.web.servlet.resource.ResourceUrlEncodingFilter;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
 /** Simple initializer. */
@@ -50,7 +51,9 @@ public class AdvanceInitializer extends AbstractAnnotationConfigDispatcherServle
 
   @Override
   protected Filter[] getServletFilters() {
-    return new Filter[] {new ClientInfoMdcPutFilter(), new CharacterEncodingFilter()};
+    return new Filter[] {
+      new ClientInfoMdcPutFilter(), new CharacterEncodingFilter(), new ResourceUrlEncodingFilter()
+    };
   }
 
   @Override
