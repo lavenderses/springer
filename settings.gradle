@@ -3,4 +3,5 @@ include 'data-access'
 include 'mvc'
 include 'rest'
 include 'advance'
+include 'test'
 
