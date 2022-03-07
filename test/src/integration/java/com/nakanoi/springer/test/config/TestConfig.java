@@ -13,7 +13,7 @@ import org.springframework.transaction.PlatformTransactionManager;
 
 /** Simple datasource config for test. */
 @Configuration
-@ComponentScan("com.nakanoi.springer.test")
+@ComponentScan("com.nakanoi.springer.test.app")
 @PropertySource("/datasource.properties")
 public class TestConfig {
   @Bean
