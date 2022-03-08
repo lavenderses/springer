@@ -9,7 +9,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 /** Simple servlet config. */
 @Configuration
 @EnableWebMvc
-@ComponentScan("com.nakanoi.springer.security.user")
+@ComponentScan("com.nakanoi.springer.security.controller")
 public class WebServletConfig implements WebMvcConfigurer {
   @Override
   public void configureViewResolvers(ViewResolverRegistry registry) {

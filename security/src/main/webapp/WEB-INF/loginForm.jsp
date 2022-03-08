@@ -11,13 +11,12 @@
     <div id="wrapper">
       <h1>Login</h1>
       <c:if test="${param.containsKey('error')}">
-        <p>Out</p>
         <span style="color: red;">
           <c:out value="${SPRING_SECURITY_LAST_EXCEPTION.message}" />
         </span>
       </c:if>
       <c:url var="loginUrl" value="/login" />
-      <form:form action="loginUrl">
+      <form:form action="${loginUrl}">
         <table>
           <tr>
             <td><label for="username">Username</td>
