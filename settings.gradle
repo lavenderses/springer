@@ -4,4 +4,5 @@ include 'mvc'
 include 'rest'
 include 'advance'
 include 'test'
+include 'security'
 
