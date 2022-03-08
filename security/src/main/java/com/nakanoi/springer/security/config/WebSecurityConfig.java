@@ -36,6 +36,21 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         .anyRequest()
         .authenticated();
     http.exceptionHandling().accessDeniedPage("/WEB-INF/accessDenied.jsp");
+    http.sessionManagement()
+        .sessionFixation()
+        .newSession()
+        .invalidSessionUrl("/error/invalidSession");
+    http.headers()
+        .defaultsDisabled()
+        .cacheControl()
+        .and()
+        .frameOptions()
+        .and()
+        .contentTypeOptions()
+        .and()
+        .xssProtection()
+        .and()
+        .httpStrictTransportSecurity();
   }
 
   @Bean
