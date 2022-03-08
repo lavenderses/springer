@@ -1,6 +1,7 @@
 package com.nakanoi.springer.security.user;
 
 import java.util.Map;
+import org.springframework.dao.IncorrectResultSizeDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -15,8 +16,11 @@ public class UserRegistry {
 
   public User findOne(String username) {
     String sql = "SELECT username, password, isEnabled, isAdmin FROM securities WHERE username = ?";
-    Map<String, Object> map = jdbcTemplate.queryForMap(sql, username);
-    if (map.size() == 0) {
+    Map<String, Object> map;
+    try {
+      map = jdbcTemplate.queryForMap(sql, username);
+    } catch (IncorrectResultSizeDataAccessException e) {
+      e.printStackTrace();
       return null;
     }
     User user = new User();

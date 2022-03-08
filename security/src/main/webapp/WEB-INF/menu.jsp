@@ -12,6 +12,12 @@
       <h1>Menu</h1>
       <p><sec:authentication property="principal.user.username" /></p>
       <p><c:out value="${user.username}" /></p>
+      <sec:authorize access="hasRole('ADMIN')">
+        <a href="/security/admin">Admin Page</a>
+      </sec:authorize>
+      <sec:authorize url="/admin/accounts">
+        <a href="/security/admin">Admin All Accounts Page</a>
+      </sec:authorize>
       <form action="<c:url value='/logout' />" method="POST">
         <sec:csrfInput />
         <button>Logout</button>
