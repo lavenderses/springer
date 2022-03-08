@@ -1,5 +1,6 @@
 package com.nakanoi.springer.security.user;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -10,16 +11,13 @@ public class UserDetailsImpl implements UserDetails {
   private final Collection<GrantedAuthority> authorities;
 
   public UserDetailsImpl(User user, Collection<GrantedAuthority> authorities) {
-    // this.user = new User(user.getUsername(), user.getPassword(), user.isEnabled(), true, true,
-    // true, user.getAuthorities());;
-    // this.authorities = new ArrayList<>(authorities);
-    this.user = user;
-    this.authorities = authorities;
+    this.user = User.copyOf(user);
+    this.authorities = new ArrayList<>(authorities);
   }
 
   @Override
   public Collection<? extends GrantedAuthority> getAuthorities() {
-    return authorities;
+    return new ArrayList<>(authorities);
   }
 
   @Override
@@ -53,8 +51,6 @@ public class UserDetailsImpl implements UserDetails {
   }
 
   public User getUser() {
-    // new User(user.getUsername(), user.getPassword(), user.isEnabled(), true, true, true,
-    // user.getAuthorities());
-    return user;
+    return User.copyOf(user);
   }
 }

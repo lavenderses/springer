@@ -1,6 +1,9 @@
 package com.nakanoi.springer.security.user;
 
-public class User {
+import java.io.Serializable;
+
+public class User implements Serializable {
+  private static final long serialVersionUID = 1L;
   private String username;
   private String password;
   private boolean isEnabled;
@@ -36,5 +39,14 @@ public class User {
 
   public void setAdmin(boolean admin) {
     isAdmin = admin;
+  }
+
+  static User copyOf(User user) {
+    User copy = new User();
+    copy.setUsername(user.getUsername());
+    copy.setPassword(user.getPassword());
+    copy.setEnabled(user.isEnabled());
+    copy.setAdmin(user.isAdmin());
+    return copy;
   }
 }
