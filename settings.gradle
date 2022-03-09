@@ -6,4 +6,5 @@ include 'advance'
 include 'test'
 include 'security'
 include 'jpa'
+include 'mybatis'
 
