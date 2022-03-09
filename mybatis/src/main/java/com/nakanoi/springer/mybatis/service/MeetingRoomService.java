@@ -3,7 +3,9 @@ package com.nakanoi.springer.mybatis.service;
 import com.nakanoi.springer.mybatis.domain.mapper.MeetingRoomMapper;
 import com.nakanoi.springer.mybatis.domain.model.MeetingRoom;
 import com.nakanoi.springer.mybatis.domain.model.MeetingRoomCriteria;
+import java.util.Arrays;
 import java.util.List;
+import org.apache.ibatis.session.RowBounds;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,10 +21,23 @@ public class MeetingRoomService {
   @Transactional
   public void callMyBatisApis() {
     MeetingRoom room = meetingRoomMapper.findOne("X001");
+    room = meetingRoomMapper.findOneWithReservableDates("X001");
+    room = meetingRoomMapper.findOneWithReservableDatesOnOneQuery("A090");
     List<MeetingRoom> rooms = meetingRoomMapper.findAll();
-    long roomNumber = meetingRoomMapper.count();
-    MeetingRoomCriteria criteria = new MeetingRoomCriteria(10);
+    RowBounds rowBounds = new RowBounds(1, 2);
+    rooms = meetingRoomMapper.findAll(rowBounds);
+    MeetingRoomCriteria criteria = new MeetingRoomCriteria(20);
     rooms = meetingRoomMapper.findAllByCriteria(criteria, "room_name");
+    rooms = meetingRoomMapper.findAllByCriteriaWithBuilder(criteria);
+    rooms = meetingRoomMapper.findByCapacityClass("small");
+    rooms = meetingRoomMapper.findByRoomIds(Arrays.asList("A090", "Y222"));
+
+    long roomNumber = meetingRoomMapper.count();
+    meetingRoomMapper.collectAll(
+        context -> {
+          int resultPosition = context.getResultCount();
+          MeetingRoom resultRoom = context.getResultObject();
+        });
 
     String newRoomId = "xyz";
     String newRoomName = "Hole X";

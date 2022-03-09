@@ -6,24 +6,67 @@
     <resultMap id="roomResultMap" type="MeetingRoom">
         <id column="room_id" property="roomId" />
         <result column="room_name" property="roomName" />
+        <collection property="reservableDates" column="room_id"
+            javaType="ArrayList" select="findReservableDates" />
     </resultMap>
+
+    <resultMap id="reservableDateResultMap" type="ReservableDate">
+        <result property="roomId" column="room_id" />
+        <result property="reservableDate" column="reservable_date" />
+    </resultMap>
+
+    <resultMap id="roomResultMapWithJoin" type="MeetingRoom">
+        <id property="roomId" column="room_id" />
+        <result property="roomName" column="room_name" />
+        <collection property="reservableDates" javaType="ArrayList" ofType="ReservableDate">
+            <result property="roomId" column="room_id" />
+            <result property="reservableDate" column="reservable_date" />
+        </collection>
+    </resultMap>
+
+    <select id="findReservableDates" parameterType="string" resultMap="reservableDateResultMap">
+        SELECT
+            room_id, reservable_date
+        FROM
+            reservable_dates
+        WHERE
+            room_id = #{roomId}
+        ORDER By
+            reservable_date
+    </select>
 
     <select id="findOne" parameterType="string" resultType="MeetingRoom">
         SELECT
-            room_id AS roomId,
-            room_name AS roomName,
-            capacity
+            room_id AS roomId, room_name AS roomName, capacity
         FROM
             meeting_rooms
         WHERE
             room_id = #{roomId}
     </select>
 
+    <select id="findOneWithReservableDates" resultMap="roomResultMap">
+        SELECT
+            room_id, room_name, capacity
+        FROM
+            meeting_rooms
+        WHERE
+            room_id = #{roomId}
+    </select>
+
+    <select id="findOneWithReservableDatesOnOneQuery" resultMap="roomResultMapWithJoin">
+        SELECT
+            room.room_id, room.room_name, room.capacity,
+            date.room_id, date.reservable_date
+        FROM
+            meeting_rooms room
+            LEFT OUTER JOIN reservable_dates date ON room.room_id = date.room_id
+        WHERE
+            room.room_id = #{roomId}
+    </select>
+
     <select id="findAll" resultType="MeetingRoom">
         SELECT
-            room_id,
-            room_name,
-            capacity
+            room_id, room_name, capacity
         FROM
             meeting_rooms
         ORDER BY
@@ -32,30 +75,74 @@
 
     <select id="findAllByCriteria" resultType="MeetingRoom" resultMap="roomResultMap">
         SELECT
-            room_id,
-            room_name,
-            capacity
+            room_id, room_name, capacity
         FROM
             meeting_rooms
-        WHERE
-            capacity >= #{criteria.capacity}
+        <where>
+            <if test="criteria.roomId != null">
+                AND room_id LIKE #{criteria.roomId} || '%'
+            </if>
+            <if test="criteria.roomName != null">
+                AND room_name LIKE #{criteria.roomName} || '%'
+            </if>
+            <if test="criteria.capacity != null">
+                AND capacity >= #{criteria.capacity}
+            </if>
+        </where>
         ORDER BY
             ${orderByColumn}
+    </select>
+
+    <select id="findByCapacityClass" resultType="MeetingRoom" resultMap="roomResultMap">
+        SELECT
+            room_id, room_name, capacity
+        FROM
+            meeting_rooms
+        <where>
+            <choose>
+                <when test="capacityClass == 'small'">
+                    <![CDATA[
+                        capacity < 50
+                    ]]>
+                </when>
+                <when test="capacityClass == 'middle'">
+                    <![CDATA[
+                        capacity >= 50 AND capacity < 100
+                    ]]>
+                </when>
+                <otherwise>
+                    capacity >= 100
+                </otherwise>
+            </choose>
+        </where>
+    </select>
+
+    <select id="findByRoomIds" resultType="MeetingRoom" resultMap="roomResultMap">
+        SELECT
+            room_id, room_name, capacity
+        FROM
+            meeting_rooms
+        <where>
+            <if test="list != null">
+                <foreach item="id" index="index" collection="list"
+                    open="room_id IN (" separator="," close=")">
+                    #{id}
+                </foreach>
+            </if>
+        </where>
+        ORDER BY
+            room_id
     </select>
 
     <select id="count" resultType="long">
         SELECT COUNT(*) FROM meeting_rooms
     </select>
 
-    <select id="collectByCapacity" resultType="MeetingRoom" resultMap="roomResultMap">
+    <select id="collectAll" resultType="MeetingRoom">
         SELECT
-            room_id,
-            room_name,
-            capacity
+            room_id, room_name, capacity
         FROM
             meeting_rooms
-        WHERE
-            capacity >= #{capacity}
     </select>
 
     <insert id="create">
@@ -67,15 +154,18 @@
         <selectKey keyProperty="roomId" order="BEFORE" resultType="string">
             SELECT UUID()
         </selectKey>
-
         INSERT INTO meeting_rooms (room_id, room_name, capacity)
             VALUES (#{roomId}, #{roomName}, #{capacity})
     </insert>
 
     <update id="update" parameterType="MeetingRoom">
-        UPDATE meeting_rooms SET
+        UPDATE meeting_rooms
+        <set>
             room_name = #{roomName},
-            capacity = #{capacity}
+            <if test="capacity > 0">
+                capacity = #{capacity}
+            </if>
+        </set>
         WHERE
             room_id = #{roomId}
     </update>
