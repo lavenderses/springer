@@ -6,14 +6,12 @@ import jakarta.persistence.LockModeType;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.Query;
 import jakarta.persistence.TypedQuery;
-import org.springframework.transaction.annotation.Transactional;
-
 import java.util.List;
+import org.springframework.transaction.annotation.Transactional;
 
 /** Simple implementation for room service. */
 public class RoomServiceImpl implements RoomService {
-  @PersistenceContext
-  private EntityManager entityManager;
+  @PersistenceContext private EntityManager entityManager;
 
   @Override
   @Transactional(readOnly = true)
@@ -48,7 +46,8 @@ public class RoomServiceImpl implements RoomService {
 
   @Transactional(readOnly = true)
   public List<Room> getRoomsByNameFetch(String roomName) {
-    String jpql = "SELECT DISTINCT r FROM Room r LEFT JOIN FETCH r.equipments WHERE r.roomName = :roomName";
+    String jpql =
+        "SELECT DISTINCT r FROM Room r LEFT JOIN FETCH r.equipments WHERE r.roomName = :roomName";
     TypedQuery<Room> query = entityManager.createQuery(jpql, Room.class);
     query.setParameter("roomName", roomName);
     return query.getResultList();
@@ -83,8 +82,13 @@ public class RoomServiceImpl implements RoomService {
   }
 
   @Transactional
-  public void updateRoomWithOptimisticLock(Integer id, String roomName, Integer capacity) {
+  public int updateRoomWithOptimisticLock(Integer id, String roomName, Integer capacity) {
     Room room = entityManager.find(Room.class, id);
     entityManager.lock(room, LockModeType.OPTIMISTIC);
+    String jpql = "UPDATE Room r SET r.capacity = :capacity WHERE r.roomName = :roomName";
+    Query query = entityManager.createQuery(jpql);
+    query.setParameter("capacity", capacity);
+    query.setParameter("roomName", roomName);
+    return query.executeUpdate();
   }
 }
