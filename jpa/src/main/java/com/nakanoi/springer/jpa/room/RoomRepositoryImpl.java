@@ -1,9 +1,8 @@
 package com.nakanoi.springer.jpa.room;
 
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.PersistenceContext;
-
 import java.util.List;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 
 /** Simple implementation for room repository custom. */
 public class RoomRepositoryImpl implements RoomRepositoryCustom {

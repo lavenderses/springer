@@ -1,9 +1,8 @@
 package com.nakanoi.springer.jpa.config;
 
+import com.nakanoi.springer.jpa.room.RoomAuditorAware;
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
-
-import com.nakanoi.springer.jpa.room.RoomAuditorAware;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.domain.AuditorAware;

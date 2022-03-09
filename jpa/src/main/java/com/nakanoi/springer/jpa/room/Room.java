@@ -1,9 +1,6 @@
 package com.nakanoi.springer.jpa.room;
 
 import com.nakanoi.springer.jpa.equipment.Equipment;
-import org.springframework.data.annotation.CreatedBy;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.CascadeType;
@@ -16,6 +13,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Version;
+import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 /** Simple room entity. */
 @Entity
