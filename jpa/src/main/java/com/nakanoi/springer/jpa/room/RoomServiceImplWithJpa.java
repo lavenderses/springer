@@ -1,16 +1,16 @@
 package com.nakanoi.springer.jpa.room;
 
 import com.nakanoi.springer.jpa.equipment.Equipment;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.LockModeType;
-import jakarta.persistence.PersistenceContext;
-import jakarta.persistence.Query;
-import jakarta.persistence.TypedQuery;
 import java.util.List;
+import javax.persistence.EntityManager;
+import javax.persistence.LockModeType;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 import org.springframework.transaction.annotation.Transactional;
 
 /** Simple implementation for room service. */
-public class RoomServiceImpl implements RoomService {
+public class RoomServiceImplWithJpa implements RoomService {
   @PersistenceContext private EntityManager entityManager;
 
   @Override
