@@ -4,6 +4,12 @@ package com.nakanoi.springer.mybatis.domain.model;
 public class MeetingRoomCriteria {
   private Integer capacity;
 
+  public MeetingRoomCriteria() {}
+
+  public MeetingRoomCriteria(Integer capacity) {
+    this.capacity = capacity;
+  }
+
   public Integer getCapacity() {
     return capacity;
   }

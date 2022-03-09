@@ -8,5 +8,5 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 /** Simple configuration for web servlet. */
 @Configuration
 @EnableWebMvc
-@ComponentScan("com.nakanoi.springer.mybatis.controller")
+@ComponentScan({"com.nakanoi.springer.mybatis.controller", "com.nakanoi.springer.mybatis.service"})
 public class WebServletConfig implements WebMvcConfigurer {}

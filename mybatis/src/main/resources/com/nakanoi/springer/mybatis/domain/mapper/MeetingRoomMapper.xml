@@ -19,10 +19,6 @@
             room_id = #{roomId}
     </select>
 
-    <select id="count" resultType="long">
-        SELECT COUNT(*) FROM meeting_rooms
-    </select>
-
     <select id="findAll" resultType="MeetingRoom">
         SELECT
             room_id,
@@ -34,12 +30,57 @@
             room_id
     </select>
 
-    <select id="collectByCriteria" resultType="MeetingRoom" resultMap="roomResultMap">
+    <select id="findAllByCriteria" resultType="MeetingRoom" resultMap="roomResultMap">
         SELECT
             room_id,
             room_name,
             capacity
         FROM
             meeting_rooms
+        WHERE
+            capacity >= #{criteria.capacity}
+        ORDER BY
+            ${orderByColumn}
     </select>
+
+    <select id="count" resultType="long">
+        SELECT COUNT(*) FROM meeting_rooms
+    </select>
+
+    <select id="collectByCapacity" resultType="MeetingRoom" resultMap="roomResultMap">
+        SELECT
+            room_id,
+            room_name,
+            capacity
+        FROM
+            meeting_rooms
+        WHERE
+            capacity >= #{capacity}
+    </select>
+
+    <insert id="create">
+        INSERT INTO meeting_rooms (room_id, room_name, capacity)
+            VALUES (#{roomId}, #{roomName}, #{capacity})
+    </insert>
+
+    <insert id="createWithNullRoomId">
+        <selectKey keyProperty="roomId" order="BEFORE" resultType="string">
+            SELECT UUID()
+        </selectKey>
+
+        INSERT INTO meeting_rooms (room_id, room_name, capacity)
+            VALUES (#{roomId}, #{roomName}, #{capacity})
+    </insert>
+
+    <update id="update" parameterType="MeetingRoom">
+        UPDATE meeting_rooms SET
+            room_name = #{roomName},
+            capacity = #{capacity}
+        WHERE
+            room_id = #{roomId}
+    </update>
+
+    <delete id="delete">
+        DELETE FROM meeting_rooms WHERE room_id = #{roomId}
+    </delete>
 </mapper>

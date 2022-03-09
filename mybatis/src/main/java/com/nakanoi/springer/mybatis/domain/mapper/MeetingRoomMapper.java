@@ -14,7 +14,7 @@ public interface MeetingRoomMapper {
 
   List<MeetingRoom> findAllByCriteria(
       @Param("criteria") MeetingRoomCriteria criteria,
-      @Param("orderByColumn") Integer orderByColumn);
+      @Param("orderByColumn") String orderByColumn);
 
   long count();
 
@@ -26,4 +26,12 @@ public interface MeetingRoomMapper {
       @Param("roomId") String roomId,
       @Param("roomName") String roomName,
       @Param("capacity") int capacity);
+
+  void createWithNullRoomId(MeetingRoom room);
+
+  boolean update(MeetingRoom room);
+
+  void delete(MeetingRoom room);
+
+  void delete(String roomId);
 }
