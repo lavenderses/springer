@@ -70,4 +70,11 @@ public class Equipment {
   public void setEquipmentRemarks(String equipmentRemarks) {
     this.equipmentRemarks = equipmentRemarks;
   }
+
+  @Override
+  public String toString() {
+    return String.format(
+        "Equipment{equipmentId=[%d], equipmentName=[%s], equipmentCount=[%d], equipmentRemarks=[%s]",
+        equipmentId, equipmentName, equipmentCount, equipmentRemarks);
+  }
 }

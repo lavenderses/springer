@@ -9,6 +9,7 @@ import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -22,7 +23,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @EntityListeners(AuditingEntityListener.class)
 public class Room implements Serializable {
   @Id
-  @GeneratedValue
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(name = "room_id")
   private Integer roomId;
 
@@ -81,5 +82,12 @@ public class Room implements Serializable {
 
   public void setCreatedBy(String createdBy) {
     this.createdBy = createdBy;
+  }
+
+  @Override
+  public String toString() {
+    return String.format(
+        "Room{roomId=[%d], roomName=[%s], capacity=[%d], equipments=[%s], version=[%d]}",
+        roomId, roomName, capacity, equipments, version);
   }
 }

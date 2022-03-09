@@ -21,6 +21,9 @@ public class RoomController {
   @ResponseBody
   public String getRooms() {
     Room room = roomService.getRoom(1);
-    return "Succeeded.";
+    room = roomService.createRoom("roomA", 50);
+    room = roomService.updateRoom(room.getRoomId(), "updated room");
+    roomService.deleteRoom(room.getRoomId());
+    return room.toString();
   }
 }
