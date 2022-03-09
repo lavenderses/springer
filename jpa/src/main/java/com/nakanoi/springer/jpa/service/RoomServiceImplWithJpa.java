@@ -1,6 +1,7 @@
-package com.nakanoi.springer.jpa.room;
+package com.nakanoi.springer.jpa.service;
 
 import com.nakanoi.springer.jpa.equipment.Equipment;
+import com.nakanoi.springer.jpa.room.Room;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.LockModeType;

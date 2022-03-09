@@ -1,5 +1,7 @@
-package com.nakanoi.springer.jpa.room;
+package com.nakanoi.springer.jpa.service;
 
+import com.nakanoi.springer.jpa.repository.RoomRepository;
+import com.nakanoi.springer.jpa.room.Room;
 import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;

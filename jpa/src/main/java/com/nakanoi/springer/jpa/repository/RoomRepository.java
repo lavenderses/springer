@@ -1,5 +1,6 @@
-package com.nakanoi.springer.jpa.room;
+package com.nakanoi.springer.jpa.repository;
 
+import com.nakanoi.springer.jpa.room.Room;
 import java.util.List;
 import javax.persistence.LockModeType;
 import org.springframework.data.domain.Page;

@@ -8,5 +8,5 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 /** Simple web servlet config. */
 @Configuration
 @EnableWebMvc
-@ComponentScan("com.nakanoi.springer.jpa.controller")
+@ComponentScan({"com.nakanoi.springer.jpa.controller", "com.nakanoi.springer.jpa.service"})
 public class WebServletConfig implements WebMvcConfigurer {}

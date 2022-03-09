@@ -19,7 +19,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 /** Simple configuration for jpa. */
 @Configuration
 @EnableTransactionManagement
-@EnableJpaRepositories("com.nakanoi.springer.jpa.room")
+@EnableJpaRepositories("com.nakanoi.springer.jpa.repository")
 @EnableJpaAuditing
 public class JpaConfig {
   @Bean

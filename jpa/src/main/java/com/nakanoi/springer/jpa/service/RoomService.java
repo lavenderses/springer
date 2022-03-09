@@ -1,4 +1,6 @@
-package com.nakanoi.springer.jpa.room;
+package com.nakanoi.springer.jpa.service;
+
+import com.nakanoi.springer.jpa.room.Room;
 
 /** Simple room service interface. */
 public interface RoomService {
