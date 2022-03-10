@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+  <head>
+    <title th:text="${title}"></title>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <p>
+        <span th:text="${hello}">Hello.</span>
+    </p>
+  <h2>Properties</h2>
+    <p>Host: <span th:text="${target.host}">Not configured</span></p>
+    <p>Port: <span th:text="${target.port}">Not configured</span></p>
+  </body>
+</html>
